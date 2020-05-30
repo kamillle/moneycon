@@ -142,7 +142,16 @@ module Isuconp
       end
 
       def image_url(post)
-        "/image/#{post[:img_path]}"
+        ext = ""
+        if post[:mime] == "image/jpeg"
+          ext = ".jpg"
+        elsif post[:mime] == "image/png"
+          ext = ".png"
+        elsif post[:mime] == "image/gif"
+          ext = ".gif"
+        end
+
+        "/image/#{post[:id]}#{ext}"
       end
     end
 
