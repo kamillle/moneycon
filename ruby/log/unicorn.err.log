@@ -1,0 +1,44 @@
+I, [2020-05-30T15:31:11.296575 #88463]  INFO -- : Refreshing Gem list
+I, [2020-05-30T15:31:11.361218 #88463]  INFO -- : listening on addr=127.0.0.1:8080 fd=18
+I, [2020-05-30T15:31:11.361338 #88463]  INFO -- : worker=0 spawning...
+I, [2020-05-30T15:31:11.362609 #88463]  INFO -- : master process ready
+I, [2020-05-30T15:31:11.363581 #88476]  INFO -- : worker=0 spawned pid=88476
+I, [2020-05-30T15:31:11.364267 #88476]  INFO -- : worker=0 ready
+/Users/kamijima.yuji/webapp/ruby/views/layout.erb:13: warning: `yield' in class syntax will not be supported from Ruby 3.0. [Feature #15575]
+/Users/kamijima.yuji/webapp/ruby/.bundle/ruby/2.7.0/gems/sinatra-1.4.7/lib/sinatra/base.rb:1068: warning: constant ::Fixnum is deprecated
+/Users/kamijima.yuji/webapp/ruby/.bundle/ruby/2.7.0/gems/sinatra-1.4.7/lib/sinatra/base.rb:1069: warning: constant ::Fixnum is deprecated
+/Users/kamijima.yuji/webapp/ruby/.bundle/ruby/2.7.0/gems/sinatra-1.4.7/lib/sinatra/base.rb:1068: warning: constant ::Fixnum is deprecated
+127.0.0.1 - - [30/May/2020:15:31:17 +0900] "GET /posts/10091 HTTP/1.1" 200 1831 0.0385
+/Users/kamijima.yuji/webapp/ruby/.bundle/ruby/2.7.0/gems/sinatra-1.4.7/lib/sinatra/base.rb:1069: warning: constant ::Fixnum is deprecated
+127.0.0.1 - - [30/May/2020:15:31:19 +0900] "GET /css/moneycon.css HTTP/1.1" 200 85371607 1.5342
+127.0.0.1 - - [30/May/2020:15:31:19 +0900] "GET /css/style.css HTTP/1.1" 304 - 0.0006
+127.0.0.1 - - [30/May/2020:15:31:19 +0900] "GET /js/jquery-2.2.0.js HTTP/1.1" 304 - 0.0004
+127.0.0.1 - - [30/May/2020:15:31:19 +0900] "GET /js/jquery.timeago.js HTTP/1.1" 304 - 0.0004
+127.0.0.1 - - [30/May/2020:15:31:19 +0900] "GET /js/jquery.timeago.ja.js HTTP/1.1" 304 - 0.0004
+127.0.0.1 - - [30/May/2020:15:31:19 +0900] "GET /js/main.js HTTP/1.1" 304 - 0.0004
+127.0.0.1 - - [30/May/2020:15:31:19 +0900] "GET /image/10091.jpg HTTP/1.1" 200 - 0.0015
+127.0.0.1 - - [30/May/2020:15:31:19 +0900] "GET /favicon.ico HTTP/1.1" 200 43 0.0007
+/Users/kamijima.yuji/webapp/ruby/views/layout.erb:13: warning: `yield' in class syntax will not be supported from Ruby 3.0. [Feature #15575]
+127.0.0.1 - - [30/May/2020:15:31:27 +0900] "GET / HTTP/1.1" 200 21210 0.0417
+127.0.0.1 - - [30/May/2020:15:31:28 +0900] "GET /css/moneycon.css HTTP/1.1" 200 85371607 1.3534
+127.0.0.1 - - [30/May/2020:15:31:28 +0900] "GET /image/10091.jpg HTTP/1.1" 200 - 0.0018
+127.0.0.1 - - [30/May/2020:15:31:28 +0900] "GET /image/10090.jpg HTTP/1.1" 200 - 0.0016
+127.0.0.1 - - [30/May/2020:15:31:28 +0900] "GET /image/10089.jpg HTTP/1.1" 200 - 0.0016
+127.0.0.1 - - [30/May/2020:15:31:28 +0900] "GET /image/10088.jpg HTTP/1.1" 200 590987 0.0404
+127.0.0.1 - - [30/May/2020:15:31:28 +0900] "GET /image/10087.jpg HTTP/1.1" 200 590987 0.0624
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10086.jpg HTTP/1.1" 200 590987 0.0439
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10085.jpg HTTP/1.1" 200 590987 0.0419
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10084.jpg HTTP/1.1" 200 590987 0.0390
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10083.jpg HTTP/1.1" 200 590987 0.0371
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10082.jpg HTTP/1.1" 200 122399 0.0100
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10081.jpg HTTP/1.1" 200 122399 0.0094
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10080.jpg HTTP/1.1" 200 122399 0.0097
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10079.jpg HTTP/1.1" 200 122399 0.0089
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10078.jpg HTTP/1.1" 200 122399 0.0113
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10077.jpg HTTP/1.1" 200 590987 0.0373
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10076.jpg HTTP/1.1" 200 766647 0.0595
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10075.jpg HTTP/1.1" 200 766647 0.0570
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /image/10074.jpg HTTP/1.1" 200 122399 0.0090
+127.0.0.1 - - [30/May/2020:15:31:29 +0900] "GET /img/ajax-loader.gif HTTP/1.1" 304 - 0.0008
+I, [2020-05-30T15:31:42.085537 #88463]  INFO -- : reaped #<Process::Status: pid 88476 exit 0> worker=0
+I, [2020-05-30T15:31:42.085858 #88463]  INFO -- : master complete
