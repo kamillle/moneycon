@@ -107,23 +107,24 @@ module Isuconp
         comment_counts = db.prepare("SELECT post_id, COUNT(*) AS `count` FROM `comments` WHERE `post_id` IN (#{comment_count_placeholder}) GROUP BY `post_id`").execute(*post_ids).to_a
         comment_count_hash = {}.tap { |hash| comment_counts.map { |a| hash[a[:post_id]] = a[:count] } }
 
+        comments_placeholder = (['?'] * post_ids.length).join(",")
+        comments_query = "SELECT * FROM `comments` WHERE `post_id` IN (#{comments_placeholder}) ORDER BY `created_at` DESC"
+        unless all_comments
+          comments_query += ' LIMIT 3'
+        end
+        comment_list = db.prepare(comments_query).execute(*post_ids).to_a
+        comments_hash = {}.tap { |hash| comment_list.map { |a| hash[a[:post_id]] ||= []; hash[a[:post_id]] << a } }
+
         user_ids = results.map { |a| a[:user_id] }
         user_placeholder = (['?'] * user_ids.length).join(",")
         users = db.prepare("SELECT * FROM `users` WHERE `id` IN (#{user_placeholder})").execute(*user_ids).to_a
-        # require 'pry'
-        # binding.pry
         users_hash = {}.tap { |hash| users.map { |a| hash[a[:id]] = a } }
 
         results.to_a.each do |post|
           post[:comment_count] = comment_count_hash[post[:id]]
 
-          query = 'SELECT * FROM `comments` WHERE `post_id` = ? ORDER BY `created_at` DESC'
-          unless all_comments
-            query += ' LIMIT 3'
-          end
-          comments = db.prepare(query).execute(
-            post[:id]
-          ).to_a
+          comments = comments_hash[post[:id]]
+
           comments.each do |comment|
             comment[:user] = db.prepare('SELECT * FROM `users` WHERE `id` = ?').execute(
               comment[:user_id]
