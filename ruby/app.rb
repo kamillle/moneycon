@@ -158,7 +158,7 @@ module Isuconp
             ext = ".gif"
           end
 
-          filename = "#{SecureRandom.hex(10)}.#{ext}"
+          filename = "#{SecureRandom.hex(10)}#{ext}"
           new_file = File.open("../public/uploaded/image/#{filename}", "w")
           new_file.write(post[:imgdata])
           new_file.close
