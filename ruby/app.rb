@@ -143,7 +143,7 @@ module Isuconp
     end
 
     get '/datapatch/imagedata_to_fs' do
-      results = db.prepare('SELECT `id`, `mime`, `imgdata` FROM `posts` WHERE `file_path` = NULL').execute
+      results = db.prepare('SELECT `id`, `mime`, `imgdata` FROM `posts` WHERE `imgdata` IS NOT NULL AND img_path = ""').execute
 
       results.to_a.each do |post|
         ext = ""
@@ -161,7 +161,7 @@ module Isuconp
         new_file.close
 
         query = 'UPDATE `posts` SET `img_path` = ? WHERE `id` = ?'
-        db.prepare(query).execute(filename, post.id)
+        db.prepare(query).execute(filename, post[:id])
       end
 
       redirect '/', 302
