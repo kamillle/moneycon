@@ -144,25 +144,28 @@ module Isuconp
     end
 
     get '/datapatch/imagedata_to_fs' do
-      results = db.prepare('SELECT `id`, `mime`, `imgdata` FROM `posts` WHERE `imgdata` IS NOT NULL AND img_path = ""').execute
+      post_id_results = db.prepare('SELECT `id` FROM `posts` WHERE `imgdata` IS NOT NULL AND img_path = ""').execute
 
-      results.to_a.each do |post|
-        ext = ""
-        if post[:mime] == "image/jpeg"
-          ext = ".jpg"
-        elsif post[:mime] == "image/png"
-          ext = ".png"
-        elsif post[:mime] == "image/gif"
-          ext = ".gif"
+      post_id_results.to_a.each do |post_id|
+        results = db.prepare('SELECT `id`, `mime`, `imgdata` FROM `posts` WHERE `id` = ?').execute(post_id[:id])
+        results.to_a.each do |post|
+          ext = ""
+          if post[:mime] == "image/jpeg"
+            ext = ".jpg"
+          elsif post[:mime] == "image/png"
+            ext = ".png"
+          elsif post[:mime] == "image/gif"
+            ext = ".gif"
+          end
+
+          filename = "#{SecureRandom.hex(10)}.#{ext}"
+          new_file = File.open("../public/uploaded/image/#{filename}", "w")
+          new_file.write(post[:imgdata])
+          new_file.close
+
+          query = 'UPDATE `posts` SET `img_path` = ? WHERE `id` = ?'
+          db.prepare(query).execute(filename, post[:id])
         end
-
-        filename = "#{SecureRandom.hex(10)}.#{ext}"
-        new_file = File.open("../public/uploaded/image/#{filename}", "w")
-        new_file.write(post[:imgdata])
-        new_file.close
-
-        query = 'UPDATE `posts` SET `img_path` = ? WHERE `id` = ?'
-        db.prepare(query).execute(filename, post[:id])
       end
 
       redirect '/', 302
