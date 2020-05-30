@@ -2,6 +2,8 @@ require 'sinatra/base'
 require 'mysql2'
 require 'rack-flash'
 require 'shellwords'
+require 'securerandom'
+require 'fileutils'
 
 module Isuconp
   class App < Sinatra::Base
@@ -327,11 +329,14 @@ module Isuconp
         end
 
         params['file'][:tempfile].rewind
-        query = 'INSERT INTO `posts` (`user_id`, `mime`, `imgdata`, `body`) VALUES (?,?,?,?)'
+        extension = params['file'][:filename].split('.').last
+        filename = "#{SecureRandom.hex(10)}.#{extension}"
+        FileUtils.mv(params['file'][:tempfile].path, "../public/uploaded/#{filename}")
+        query = 'INSERT INTO `posts` (`user_id`, `mime`, `img_path`, `body`) VALUES (?,?,?,?)'
         db.prepare(query).execute(
           me[:id],
           mime,
-          params["file"][:tempfile].read,
+          filename,
           params["body"],
         )
         pid = db.last_id
