@@ -322,7 +322,7 @@ module Isuconp
         params['file'][:tempfile].rewind
         extension = params['file'][:filename].split('.').last
         filename = "#{SecureRandom.hex(10)}.#{extension}"
-        FileUtils.mv(params['file'][:tempfile].path, "../public/uploaded/#{filename}")
+        FileUtils.mv(params['file'][:tempfile].path, "../public/uploaded/image/#{filename}")
         query = 'INSERT INTO `posts` (`user_id`, `mime`, `img_path`, `body`) VALUES (?,?,?,?)'
         db.prepare(query).execute(
           me[:id],
