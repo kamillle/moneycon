@@ -143,6 +143,31 @@ module Isuconp
       end
     end
 
+    get '/datapatch/imagedata_to_fs' do
+      results = db.prepare('SELECT `id`, `mime`, `imgdata` FROM `posts` WHERE `file_path` = NULL').execute
+
+      results.to_a.each do |post|
+        ext = ""
+        if post[:mime] == "image/jpeg"
+          ext = ".jpg"
+        elsif post[:mime] == "image/png"
+          ext = ".png"
+        elsif post[:mime] == "image/gif"
+          ext = ".gif"
+        end
+
+        filename = "#{SecureRandom.hex(10)}.#{ext}"
+        new_file = File.open("../public/uploaded/image/#{filename}", "w")
+        new_file.write(post[:imgdata])
+        new_file.close
+
+        query = 'UPDATE `posts` SET `img_path` = ? WHERE `id` = ?'
+        db.prepare(query).execute(filename, post.id)
+      end
+
+      redirect '/', 302
+    end
+
     get '/initialize' do
       db_initialize
       return 200
