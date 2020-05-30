@@ -3,6 +3,7 @@ require 'mysql2'
 require 'rack-flash'
 require 'shellwords'
 
+
 module Isuconp
   class App < Sinatra::Base
     use Rack::Session::Memcache, autofix_keys: true, secret: ENV['ISUCONP_SESSION_SECRET'] || 'sendagaya'
@@ -18,7 +19,7 @@ module Isuconp
         @config ||= {
           db: {
             host: ENV['ISUCONP_DB_HOST'] || 'localhost',
-            port: ENV['ISUCONP_DB_PORT'] && ENV['ISUCONP_DB_PORT'].to_i,
+            port: ENV['ISUCONP_DB_PORT'] && ENV['ISUCONP_DB_PORT'].to_i || 3306,
             username: ENV['ISUCONP_DB_USER'] || 'root',
             password: ENV['ISUCONP_DB_PASSWORD'],
             database: ENV['ISUCONP_DB_NAME'] || 'isuconp',
@@ -88,13 +89,8 @@ module Isuconp
       end
 
       def get_session_user()
-        if session[:user]
-          db.prepare('SELECT * FROM `users` WHERE `id` = ?').execute(
-            session[:user][:id]
-          ).first
-        else
-          nil
-        end
+        # 最初のユーザーを取ってくる
+        db.prepare('select * from `users` limit 1').execute.first
       end
 
       def make_posts(results, all_comments: false)
