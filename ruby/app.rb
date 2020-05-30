@@ -102,10 +102,17 @@ module Isuconp
 
         post_ids = results.map { |a| a[:id] }
 
-        placeholder = (['?'] * post_ids.length).join(",")
-
-        comment_counts = db.prepare("SELECT post_id, COUNT(*) AS `count` FROM `comments` WHERE `post_id` IN (#{placeholder}) GROUP BY `post_id`").execute(*post_ids).to_a
+        comment_count_placeholder = (['?'] * post_ids.length).join(",")
+        comment_counts = db.prepare("SELECT post_id, COUNT(*) AS `count` FROM `comments` WHERE `post_id` IN (#{comment_count_placeholder}) GROUP BY `post_id`").execute(*post_ids).to_a
         comment_count_hash = {}.tap { |hash| comment_counts.map { |a| hash[a[:post_id]] = a[:count] } }
+
+        user_ids = results.map { |a| a[:user_id] }
+
+        user_placeholder = (['?'] * user_ids.length).join(",")
+        users = db.prepare("SELECT * FROM `users` WHERE `id` IN (#{user_placeholder})").execute(*user_ids).to_a
+        # require 'pry'
+        # binding.pry
+        users_hash = {}.tap { |hash| users.map { |a| hash[a[:id]] = a } }
 
         results.to_a.each do |post|
           post[:comment_count] = comment_count_hash[post[:id]]
@@ -124,9 +131,7 @@ module Isuconp
           end
           post[:comments] = comments.reverse
 
-          post[:user] = db.prepare('SELECT * FROM `users` WHERE `id` = ?').execute(
-            post[:user_id]
-          ).first
+          post[:user] = users_hash[post[:user_id]]
 
           posts.push(post) if post[:user][:del_flg] == 0
           break if posts.length >= POSTS_PER_PAGE

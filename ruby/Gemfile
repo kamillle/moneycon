@@ -8,3 +8,4 @@ gem "foreman"
 gem "unicorn"
 gem 'mysql2', '~> 0.4.10'
 gem "rack-flash3"
+gem 'pry'
