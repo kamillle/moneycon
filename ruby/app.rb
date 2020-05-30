@@ -103,13 +103,11 @@ module Isuconp
         posts = []
 
         post_ids = results.map { |a| a[:id] }
-
         comment_count_placeholder = (['?'] * post_ids.length).join(",")
         comment_counts = db.prepare("SELECT post_id, COUNT(*) AS `count` FROM `comments` WHERE `post_id` IN (#{comment_count_placeholder}) GROUP BY `post_id`").execute(*post_ids).to_a
         comment_count_hash = {}.tap { |hash| comment_counts.map { |a| hash[a[:post_id]] = a[:count] } }
 
         user_ids = results.map { |a| a[:user_id] }
-
         user_placeholder = (['?'] * user_ids.length).join(",")
         users = db.prepare("SELECT * FROM `users` WHERE `id` IN (#{user_placeholder})").execute(*user_ids).to_a
         # require 'pry'
