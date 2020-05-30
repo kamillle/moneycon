@@ -113,9 +113,7 @@ module Isuconp
         comment_list = db.prepare(comments_query).execute(*post_ids).to_a
         comments_hash = {}.tap { |hash| comment_list.map { |a| hash[a[:post_id]] ||= []; hash[a[:post_id]] << a } }
 
-        user_ids = results.map { |a| a[:user_id] }
-        user_placeholder = (['?'] * user_ids.length).join(",")
-        users = db.prepare("SELECT * FROM `users` WHERE `id` IN (#{user_placeholder})").execute(*user_ids).to_a
+        users = db.prepare("SELECT * FROM `users`").execute().to_a
         users_hash = {}.tap { |hash| users.map { |a| hash[a[:id]] = a } }
 
         results.to_a.each do |post|
@@ -124,9 +122,7 @@ module Isuconp
           comments = comments_hash[post[:id]]
 
           comments.each do |comment|
-            comment[:user] = db.prepare('SELECT * FROM `users` WHERE `id` = ?').execute(
-              comment[:user_id]
-            ).first
+            comment[:user] = users_hash[comment[:user_id]]
           end
           post[:comments] = comments.reverse
 
