@@ -119,7 +119,7 @@ module Isuconp
         results.to_a.each do |post|
           post[:comment_count] = comment_count_hash[post[:id]]
 
-          comments = comments_hash[post[:id]]
+          comments = comments_hash[post[:id]] || []
 
           comments.each do |comment|
             comment[:user] = users_hash[comment[:user_id]]
